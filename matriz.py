@@ -33,7 +33,6 @@ def euler(matriz,grados):
 
 def hamilton(grados):
 	"""Calcula si el grafo contiene circuito o camino hamiltoniano"""
-	print(grados)
 	maximo = 0
 	condicion = len(grados) - 1
 	for i in range(len(grados) - 1):
@@ -54,18 +53,6 @@ def grado_nodo(matriz,pos):
 		suma +=  matriz[pos][i]
 	return suma
 
-
-def crear_matriz(nodos):
-	"""Regresa una matriz cuadrada cuyas entradas son todas 0"""
-	return [[0] * nodos for i in range(nodos)]
-
-def leer_datos_matriz(matriz):
-	"""Lee los datos de una matriz de adyacencia escrita desde el teclado por el usuario"""
-	print("INGRESANDO DATOS DE LA MATRIZ")
-	for i in range(len(matriz)):
-		for j in range(len(matriz)):
-			matriz[i][j] = int(input("Ingrese el valor de {},{}: ".format(i + 1, j + 1)))
-	return matriz
 
 def grafo_conexo(matriz):
 	"""Dada una matriz de adyacencia determina si el grafo es conexo"""
@@ -89,7 +76,6 @@ def grafo_conexo(matriz):
 				for e in ext: 
 					if e not in conectados[nodo] and e != nodo:
 						conectados[nodo].append(e)
-		print(conectados[nodo])
 		result =  all(elem in conectados[nodo]  for elem in no_conectados[nodo])
 		conexo = conexo and result
 	return conexo
