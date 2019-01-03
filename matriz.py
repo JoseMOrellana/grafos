@@ -21,13 +21,11 @@ def euler(matriz,grados):
 	"""Calcula si el grafo contiene circuito o camino euleriano"""
 	sinGradoImpar, numGradosImpares = buscar_grados_impares(grados)
 	if (sinGradoImpar):
-		print("Existe camino y circuito euleriano")
-		return True
+		return "Existe camino y circuito euleriano"
 	elif(numGradosImpares == 2):
-		print("No existe circuito euleriano, sin embargo si existe camino")
+		return "No existe circuito euleriano, sin embargo si existe camino"
 	else: 
-		print("No existe ni camino ni ciclo euleriano")
-	return False
+		return "No existe ni camino ni ciclo euleriano"
 	
 	print(grados)
 
@@ -39,8 +37,8 @@ def hamilton(grados):
 		for j in range(i + 1,len(grados)):
 			suma = grados[i] + grados[j]
 			maximo = max(maximo,suma)
-	if maximo > condicion: return True
-	return False
+	if maximo > condicion: return 'Existe camino y circuito hamiltoniano'
+	return 'No existe circuito ni camino hamiltoniano'
 
 
 	
@@ -80,23 +78,42 @@ def grafo_conexo(matriz):
 		conexo = conexo and result
 	return conexo
 
+def crear_matriz(nodos,aristas):
+	matriz = [[0] * len(nodos) for i in range(len(nodos))]
+	for arista in aristas:
+		i,j = arista[0],arista[1]
+		i,j = nodos.index(i), nodos.index(j)
+		matriz[i][j] += 1
+	return matriz
 
-def run(matriz):
+
+
+def run_test(nodos,aristas):
+	matriz = crear_matriz(nodos,aristas)
+	print(matriz)
 	grados = calcular_grados(matriz)
 	conexo = grafo_conexo(matriz)
-	g_euler = g_hamilton = False
+	respuestas = [
+	'No es circuito ni camino euleriano',
+	'No es circuito ni camino hamiltoniano'
+	]
 	if conexo:
-		g_euler = euler(matriz,grados)
-		g_hamilton = hamilton(grados)
-	print("Euler: {}".format(g_euler))
-	print("Hamilton: {}".format(g_hamilton))
+		respuestas[0] = euler(matriz,grados)
+		respuestas[1] = hamilton(grados)
+	print("Euler: {}".format(respuestas[0]))
+	print("Hamilton: {}".format(respuestas[1]))
 
-			#A 	B 	C 	D 
-matriz = [
-		 	[0,	1,	1,	0], #A
-		 	[1,	0,	0,	1], #B
-		 	[1,	0,	0,	1], #C
-		 	[0,	1,	1,	0] #D
-		 ]
+ 
+nodos = ['A','B','C','D']
+aristas = [
+	['A','B'],
+	['B','A'],
+	['A','C'],
+	['C','A'],
+	['B','D'],
+	['D','B'],
+	['C','D'],
+	['D','C']
+]
 
-run(matriz)
+run_test(nodos,aristas)
