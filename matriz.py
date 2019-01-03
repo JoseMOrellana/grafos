@@ -66,14 +66,17 @@ def grafo_conexo(matriz):
 	
 	lista_aux = []
 	conexo = True
+	bandera = True
 	for nodo in conectados:
-		while conectados[nodo] != lista_aux or len(conectados[nodo]) < len(matriz) - 1:
+		while bandera and len(conectados[nodo]) < len(matriz) - 1:
+			bandera = False
 			lista_aux = conectados[nodo] 
 			for n in lista_aux:
 				ext = conectados[n]
 				for e in ext: 
 					if e not in conectados[nodo] and e != nodo:
 						conectados[nodo].append(e)
+						bandera = True
 		result =  all(elem in conectados[nodo]  for elem in no_conectados[nodo])
 		conexo = conexo and result
 	return conexo
@@ -90,7 +93,6 @@ def crear_matriz(nodos,aristas):
 
 def run_test(nodos,aristas):
 	matriz = crear_matriz(nodos,aristas)
-	print(matriz)
 	grados = calcular_grados(matriz)
 	conexo = grafo_conexo(matriz)
 	respuestas = [
@@ -107,13 +109,10 @@ def run_test(nodos,aristas):
 nodos = ['A','B','C','D']
 aristas = [
 	['A','B'],
-	['B','A'],
 	['A','C'],
-	['C','A'],
+	['B','C'],
 	['B','D'],
-	['D','B'],
-	['C','D'],
-	['D','C']
+	['C','D']
 ]
 
 run_test(nodos,aristas)
